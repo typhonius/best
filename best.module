@@ -1,9 +1,9 @@
 <?php
 
 /**
- * Implements hook_boot().
+ * Implements hook_init().
  */
-function best_boot() {
+function best_init() {
   global $user;
 
   $message = variable_get('best_message');
@@ -12,7 +12,7 @@ function best_boot() {
   }
 
   if ($user->uid == 1) {
-    drupal_set_message(t('hook boot fired.'));
+    drupal_set_message(t('hook init fired and user is admin.'));
   }
 }
 
