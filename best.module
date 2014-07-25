@@ -32,7 +32,7 @@ function best_menu() {
     'title' => 'This is the BETTER callback',
     'page callback' => 'best_page_callback',
     'access callback' => TRUE,
-    'delivery callback' => 'ajax_deliver',
+    'delivery callback' => 'drupal_json_output',
   );
 
   $items['admin/config/system/best'] = array(
