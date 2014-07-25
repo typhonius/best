@@ -70,6 +70,27 @@ function best_admin_form($form, $form_state) {
 }
 
 /**
+ * Implements hook_form_alter().
+ */
+function best_form_alter(&$form, &$form_state, $form_id) {
+  if ($form_id == 'best_admin_form') {
+    $form['best_message']['#title'] = t('Coffee');
+    $form['best_message']['#required'] = FALSE;
+  }
+  if ($form_id == 'article_node_form') {
+    $form['title']['#default_value'] = t('WRONG');
+  }
+}
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ */
+function best_form_best_admin_form_alter(&$form, &$form_state, $form_id) {
+  $form['best_message']['#title'] = t('Black Coffee');
+}
+
+
+/**
  * Implements hook_permission().
  */
 function best_permission() {
