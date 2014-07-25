@@ -1,0 +1,95 @@
+<?php
+
+/**
+ * Implements hook_boot().
+ */
+function best_boot() {
+  global $user;
+
+  $message = variable_get('best_message');
+  if (!empty($message)) {
+    drupal_set_message($message);
+  }
+
+  if ($user->uid == 1) {
+    drupal_set_message(t('hook boot fired.'));
+  }
+}
+
+/**
+ * Implements hook_menu().
+ */
+function best_menu() {
+  $items = array();
+
+  $items['best'] = array(
+    'title' => 'This is the BEST callback',
+    'page callback' => 'best_page_callback',
+    'access callback' => TRUE,
+  );
+
+  $items['better'] = array(
+    'title' => 'This is the BETTER callback',
+    'page callback' => 'best_page_callback',
+    'access callback' => TRUE,
+    'delivery callback' => 'ajax_deliver',
+  );
+
+  $items['admin/config/system/best'] = array(
+    'title' => 'Best admin page',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('best_admin_form'),
+    'access callback' => 'user_access',
+    'access arguments' => array('access best admin pages'),
+  );
+
+  return $items;
+}
+
+/**
+ * Admin form callback
+ *
+ * @param $form
+ * @param $form_state
+ * @return mixed
+ */
+function best_admin_form($form, $form_state) {
+  $form = array();
+
+  $form['best_message'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Message'),
+    '#description' => t('The message to display to users.'),
+    '#default_value' => variable_get('best_message', '(ﾉ◕ヮ◕)ﾉ*:･ﾟ✧*:･ﾟ✧'),
+    '#size' => 60,
+    '#maxlength' => 128,
+    '#required' => TRUE,
+  );
+
+  return system_settings_form($form);
+}
+
+/**
+ * Implements hook_permission().
+ */
+function best_permission() {
+  $permissions = array();
+
+  $permissions['access best admin pages'] = array(
+    'title' => t('Administer Best'),
+    'description' => t('Allows users to administer BEST'),
+    'restrict access' => TRUE,
+    'warning' => t('DANGER WILL ROBINSON!'),
+  );
+
+  return $permissions;
+}
+
+/**
+ * Basic callback
+ *
+ * @return string
+ */
+function best_page_callback() {
+  return t('Page callback successful');
+}

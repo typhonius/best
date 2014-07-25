@@ -1,0 +1,5 @@
+name = Best
+description = "This is going to be the best module"
+version = 1.3.3.7
+package = "Best modules"
+core = 7.x
